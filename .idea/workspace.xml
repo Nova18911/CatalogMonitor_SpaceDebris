@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b3dd4735-4197-49c7-9408-912cf6f95bb6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/docs/01-idef0-context.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/02-idef0-decomposition.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/03-use-case.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/03-use-case.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/04-sequence-conjunction.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/04-sequence-conjunction.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/05-sequence-report.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/05-sequence-report.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/06-dfd.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/07-data-model.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/07-data-model.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Nova18911&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Nova18911/CatalogMonitor_SpaceDebris.git&quot;,
+    &quot;accountId&quot;: &quot;f25c11c8-1d0f-4a64-8b7a-43a3499472b6&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="3JwpTng6Bfo5HEsFTfCNhwbmwJ0" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Projects/C#/CatalogMonitor_SpaceDebris/docs"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Projects\C#\CatalogMonitor_SpaceDebris\docs" />
+      <recent name="C:\Projects\C#\CatalogMonitor_SpaceDebris" />
+      <recent name="C:\Projects\C#\CatalogMonitor_SpaceDebris\controller" />
+      <recent name="C:\Projects\C#\CatalogMonitor_SpaceDebris\view" />
+      <recent name="C:\Projects\C#\CatalogMonitor_SpaceDebris\model" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Projects\C#\CatalogMonitor_SpaceDebris" />
+      <recent name="C:\Projects\C#\CatalogMonitor_SpaceDebris\model" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="CatalogMonitor_SpaceDebris" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-495700d161d3-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.22562.220" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b3dd4735-4197-49c7-9408-912cf6f95bb6" name="Changes" comment="" />
+      <created>1790581995810</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1790581995810</updated>
+    </task>
+    <servers />
+  </component>
+</project>
