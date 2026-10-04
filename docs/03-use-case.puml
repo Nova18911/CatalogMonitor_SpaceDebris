@@ -1,0 +1,48 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor "Руководитель центра" as HEAD
+actor "Владелец спутника" as OWNER
+actor "Администратор системы" as ADMIN
+
+rectangle "Центр каталогизации и мониторинга космического мусора" {
+  usecase "Регистрировать объект в каталоге" as UC1
+  usecase "Вести журнал обслуживания средств" as UC2
+  usecase "Формировать уведомление владельцу" as UC3
+  usecase "Рассчитывать опасные сближения" as UC4
+  usecase "Фиксировать реакцию владельца" as UC5
+  usecase "Фиксировать повторное обнаружение" as UC6
+  usecase "Присваивать статус «утерян»" as UC7
+  usecase "Формировать отчёты" as UC8
+  usecase "Обновлять орбитальные элементы" as UC9
+  usecase "Управлять расписанием наблюдений" as UC10
+  usecase "Подтверждать реакцию на уведомление" as UC11
+  usecase "Просматривать весь объём данных" as UC12
+  usecase "Просматривать свои уведомления" as UC13
+  usecase "Управлять учётными записями" as UC14
+  usecase "Обновлять справочники" as UC15
+}
+
+HEAD --> UC1
+HEAD --> UC2
+HEAD --> UC3
+HEAD --> UC4
+HEAD --> UC5
+HEAD --> UC6
+HEAD --> UC7
+HEAD --> UC8
+HEAD --> UC9
+HEAD --> UC10
+HEAD --> UC12
+OWNER --> UC11
+OWNER --> UC13
+ADMIN --> UC12
+ADMIN --> UC14
+ADMIN --> UC15
+
+UC3 ..> UC4 : <<include>>
+UC5 ..> UC3 : <<include>>
+UC8 ..> UC9 : <<include>>
+UC7 ..> UC6 : <<extend>>
+UC8 ..> UC4 : <<extend>>
+@enduml
