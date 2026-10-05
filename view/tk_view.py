@@ -86,12 +86,12 @@ class CatalogTab(ttk.Frame):
             self._designator = _field(box, "Междунар. идентификатор", 0, 0)
             ttk.Label(box, text="Тип объекта").grid(row=0, column=2, sticky="w", padx=4)
             self._type = tk.StringVar()
-            ttk.Combobox(box, textvariable=self._type, state="readonly", width=34,
+            ttk.Combobox(box, textvariable=self._type, state="readonly", width=26,
                          values=[t.label for t in ObjectType]).grid(row=0, column=3, padx=4)
-            self._size = _field(box, "Размер, м", 1, 0)
-            self._axis = _field(box, "Большая полуось, км", 1, 2)
+            self._size = _field(box, "Размер, м (больше 0)", 1, 0)
+            self._axis = _field(box, "Большая полуось, км (больше 6371)", 1, 2)
             self._ecc = _field(box, "Эксцентриситет (0–1)", 2, 0)
-            self._incl = _field(box, "Наклонение, °", 2, 2)
+            self._incl = _field(box, "Наклонение, ° (0–180)", 2, 2)
             ttk.Button(box, text="Зарегистрировать", command=lambda: handler.register_object(
                 NewObjectForm(self._designator.get(), self._type.get(), self._size.get(),
                               self._axis.get(), self._ecc.get(), self._incl.get()))

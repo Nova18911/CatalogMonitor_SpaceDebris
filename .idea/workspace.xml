@@ -5,18 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3dd4735-4197-49c7-9408-912cf6f95bb6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/01-idef0-context.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/02-idef0-decomposition.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/03-use-case.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/03-use-case.puml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/04-sequence-conjunction.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/04-sequence-conjunction.puml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/05-sequence-report.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/05-sequence-report.puml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/06-dfd.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/07-data-model.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/07-data-model.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,15 +42,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Projects/C#/CatalogMonitor_SpaceDebris/docs"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Projects/C#/CatalogMonitor_SpaceDebris/docs&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Projects\C#\CatalogMonitor_SpaceDebris\docs" />

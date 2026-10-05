@@ -15,6 +15,15 @@ from model.settings import LOST_AFTER_DAYS
 # Международное обозначение: год, номер запуска, часть запуска (например 1998-067A).
 DESIGNATOR_PATTERN = re.compile(r"^\d{4}-\d{3}[A-Z]{1,3}$")
 
+_LOOKALIKES = str.maketrans({
+    "А": "A", "В": "B", "С": "C", "Е": "E", "Н": "H", "К": "K", "М": "M",
+    "О": "O", "Р": "P", "Т": "T", "Х": "X",
+    "–": "-", "—": "-", "−": "-",
+})
+
+
+def normalize_designator(text: str) -> str:
+    return text.strip().upper().translate(_LOOKALIKES)
 
 class CatalogService:
     def __init__(self, objects: SpaceObjectRepository, journal: JournalRepository,
@@ -35,7 +44,7 @@ class CatalogService:
                         size_m: float, elements: OrbitalElements) -> SpaceObjectDto:
         """Сценарий 1. Зарегистрировать объект: проверить данные, присвоить каталожный номер."""
         self._policy.check(user.role, Action.REGISTER_OBJECT)
-        designator = intl_designator.strip().upper()
+        designator = normalize_designator(intl_designator)
         if not designator:
             raise ValidationError("Международный идентификатор обязателен")
         if not DESIGNATOR_PATTERN.match(designator):
