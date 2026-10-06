@@ -32,6 +32,7 @@ class ObjectStatus(LabeledEnum):
     CATALOGED = "Каталогизирован"
     LOST = "Утерян"
     REDISCOVERED = "Повторно обнаружен"
+    CONFIRMING = "Подтверждается"
 
 
 class ToolType(LabeledEnum):
@@ -79,3 +80,6 @@ class EventType(LabeledEnum):
     REGISTERED = "Регистрация объекта"
     LOST = "Присвоен статус «утерян»"
     REDISCOVERED = "Повторное обнаружение"
+    CONFIRMING_CREATED = "Создан объект со статусом «подтверждается»"
+    CONFIRMED = "Объект подтверждён (каталогизирован)"
+    UNCONFIRMED_DELETED = "Удалён неподтверждённый объект"

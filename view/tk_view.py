@@ -79,7 +79,6 @@ class CatalogTab(ttk.Frame):
             ttk.Button(buttons, text="Проверить утерянные",
                        command=handler.check_lost).pack(side="left", padx=6)
 
-        self._form_vars = None
         if Action.REGISTER_OBJECT in actions:
             box = ttk.LabelFrame(self, text="Регистрация нового объекта", padding=8)
             box.pack(fill="x")
@@ -126,10 +125,35 @@ class ObservationTab(ttk.Frame):
         self._number = _field(box, "Каталожный номер", 1, 0)
         self._time = _field(box, "Время (пусто = сейчас)", 1, 2, width=18)
         self._data = _field(box, "Полученные данные", 2, 0, width=40)
+
+        # --- поля для нового (неизвестного) объекта ---
+        extra = ttk.LabelFrame(box, text="Если объект отсутствует в каталоге — заполните ниже",
+                               padding=6)
+        extra.grid(row=3, column=0, columnspan=4, sticky="ew", padx=4, pady=(8, 0))
+        self._designator = _field(extra, "Междунар. идентификатор", 0, 0)
+        ttk.Label(extra, text="Тип объекта").grid(row=0, column=2, sticky="w", padx=4)
+        self._type = tk.StringVar()
+        ttk.Combobox(extra, textvariable=self._type, state="readonly", width=26,
+                     values=[t.label for t in ObjectType]).grid(row=0, column=3, padx=4)
+        self._size = _field(extra, "Размер, м (больше 0)", 1, 0)
+        self._axis = _field(extra, "Большая полуось, км (> 6371)", 1, 2)
+        self._ecc = _field(extra, "Эксцентриситет (0–1)", 2, 0)
+        self._incl = _field(extra, "Наклонение, ° (0–180)", 2, 2)
+
         ttk.Button(box, text="Записать наблюдение", command=lambda: handler.add_observation(
-            ObservationForm(self._tool_ids.get(self._tool.get(), ""), self._number.get(),
-                            self._time.get(), self._data.get()))
-                   ).grid(row=3, column=0, columnspan=2, sticky="w", padx=4, pady=(6, 0))
+            ObservationForm(
+                self._tool_ids.get(self._tool.get(), ""),
+                self._number.get(),
+                self._time.get(),
+                self._data.get(),
+                self._designator.get(),
+                self._type.get(),
+                self._size.get(),
+                self._axis.get(),
+                self._ecc.get(),
+                self._incl.get(),
+            ))
+                   ).grid(row=4, column=0, columnspan=2, sticky="w", padx=4, pady=(8, 0))
 
         ttk.Label(self, text="Последние наблюдения").pack(anchor="w", pady=(10, 2))
         self._tree = _make_tree(self, self.COLUMNS, height=8)
@@ -143,7 +167,8 @@ class ObservationTab(ttk.Frame):
                                  s.result) for s in sessions])
 
     def reset_form(self) -> None:
-        for var in (self._number, self._time, self._data):
+        for var in (self._number, self._time, self._data,
+                    self._designator, self._type, self._size, self._axis, self._ecc, self._incl):
             var.set("")
 
 

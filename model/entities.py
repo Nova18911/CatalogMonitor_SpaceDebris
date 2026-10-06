@@ -58,19 +58,36 @@ class SpaceObject:
         self.status = ObjectStatus.LOST
 
     def register_observation(self, when: datetime) -> bool:
-        """Учесть наблюдение. Возвращает True, если это повторное обнаружение.
+        """Учесть наблюдение.
+        Возвращает True, если это повторное обнаружение (утерян → повторно обнаружен)
+        или подтверждение (подтверждается → каталогизирован).
 
-        Переходы: утерян -> повторно обнаружен; повторно обнаружен -> каталогизирован.
-        Каталожный номер при этом не меняется.
+        Переходы:
+        - утерян → повторно обнаружен
+        - повторно обнаружен → каталогизирован
+        - подтверждается → каталогизирован
+        Каталожный номер не меняется.
         """
-        rediscovered = self.status is ObjectStatus.LOST
-        if rediscovered:
+        rediscovered_or_confirmed = False
+        if self.status is ObjectStatus.LOST:
             self.status = ObjectStatus.REDISCOVERED
+            rediscovered_or_confirmed = True
         elif self.status is ObjectStatus.REDISCOVERED:
             self.status = ObjectStatus.CATALOGED
+        elif self.status is ObjectStatus.CONFIRMING:
+            self.status = ObjectStatus.CATALOGED
+            rediscovered_or_confirmed = True
         if self.last_observed_at is None or when > self.last_observed_at:
             self.last_observed_at = when
-        return rediscovered
+        return rediscovered_or_confirmed
+
+    # в class SpaceObject (после register_observation):
+    def ensure_can_be_confirmed(self) -> None:
+        """Можно ли подтвердить объект (только из статуса «подтверждается»)."""
+        if self.status is not ObjectStatus.CONFIRMING:
+            raise InvalidTransitionError(
+                f"Объект {self.catalog_number} не находится в статусе «подтверждается» "
+                f"(текущий: «{self.status.label}»)")
 
 
 @dataclass

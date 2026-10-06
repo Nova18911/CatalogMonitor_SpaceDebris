@@ -109,6 +109,11 @@ class SpaceObjectRepository(IRepository[SpaceObject]):
             ObjectStatus[r["status"]], _from_text(r["registered_at"]),
             _from_text(r["last_observed_at"]))
 
+    def delete(self, catalog_number: str) -> None:
+        """Удалить объект (только для неподтверждённых). Связанные сеансы удаляются каскадно."""
+        self._db.execute("DELETE FROM sessions WHERE catalog_number=?", (catalog_number,))
+        self._db.execute("DELETE FROM space_objects WHERE catalog_number=?", (catalog_number,))
+
 
 class ToolRepository(IRepository[ObservationTool]):
     def __init__(self, db: Database) -> None:

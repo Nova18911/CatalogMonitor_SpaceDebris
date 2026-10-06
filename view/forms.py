@@ -21,6 +21,13 @@ class ObservationForm:
     catalog_number: str
     observed_at: str      # пусто = сейчас
     raw_data: str
+    # --- если объект отсутствует в каталоге ---
+    intl_designator: str = ""
+    type_label: str = ""
+    size_m: str = ""
+    semi_major_axis_km: str = ""
+    eccentricity: str = ""
+    inclination_deg: str = ""
 
 
 @dataclass
