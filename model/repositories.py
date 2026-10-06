@@ -91,6 +91,18 @@ class SpaceObjectRepository(IRepository[SpaceObject]):
              e.inclination_deg, item.status.name, _to_text(item.last_observed_at),
              item.catalog_number))
 
+    def mark_lost_batch(self, catalog_numbers: list[str]) -> None:
+        """Пакетное присвоение статуса LOST (оптимизация N+1)."""
+        if not catalog_numbers:
+            return
+        for i in range(0, len(catalog_numbers), 500):
+            chunk = catalog_numbers[i:i + 500]
+            placeholders = ",".join("?" * len(chunk))
+            self._db.execute(
+                f"UPDATE space_objects SET status=? WHERE catalog_number IN ({placeholders})",
+                (ObjectStatus.LOST.name, *chunk),
+            )
+
     def designator_exists(self, designator: str) -> bool:
         return bool(self._db.query(
             "SELECT 1 FROM space_objects WHERE intl_designator=?", (designator,)))

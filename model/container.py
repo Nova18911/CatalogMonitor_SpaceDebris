@@ -26,12 +26,18 @@ class ModelContainer:
     catalog: CatalogService
     observation: ObservationService
     report: ReportService
-    # Хранилища нужны только для начального заполнения и тестов.
     users: UserRepository
     objects: SpaceObjectRepository
     tools: ToolRepository
     sessions: SessionRepository
     journal: JournalRepository
+    _db: Database | None = None
+
+    def close(self) -> None:
+        """Закрыть соединение с БД (оптимизация утечки дескрипторов)."""
+        if self._db is not None:
+            self._db.close()
+            self._db = None
 
 
 def build_model(db_path: str = ":memory:",
@@ -46,4 +52,6 @@ def build_model(db_path: str = ":memory:",
         catalog=CatalogService(objects, journal, policy, bus, clock),
         observation=ObservationService(objects, tools, sessions, journal, policy, bus, clock),
         report=ReportService(objects, tools, sessions, journal, policy, clock),
-        users=users, objects=objects, tools=tools, sessions=sessions, journal=journal)
+        users=users, objects=objects, tools=tools, sessions=sessions, journal=journal,
+        _db=db,
+    )

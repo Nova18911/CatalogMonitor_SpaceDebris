@@ -3,13 +3,14 @@
 Журнал первичен: статусы «утерян» и «повторно обнаружен» за период берутся
 из журнала событий, а не из текущего состояния каталога.
 """
+from collections import Counter
 from datetime import datetime
 from statistics import mean
 from typing import Callable
 
 from model.access import AccessPolicy, Action
 from model.dto import Metric, ReportData, UserDto
-from model.entities import ObservationTool
+from model.entities import JournalEntry, ObservationTool
 from model.enums import EventType, ObjectType, ToolStatus
 from model.exceptions import ValidationError
 from model.repositories import (JournalRepository, SessionRepository, SpaceObjectRepository,
@@ -55,40 +56,43 @@ class ReportService:
             raise ValidationError("Начало периода не может быть позже конца")
 
         objects = [o for o in self._objects.get_all() if o.registered_at <= period_to]
+        # Один проход по журналу вместо двух (оптимизация №1)
+        journal_entries = self._journal.until(period_to)
         return ReportData(
             period_from=period_from,
             period_to=period_to,
             counts_by_type=self._counts_by_type(objects),
-            dangerous_approaches=None,   # расчёт сближений не входит в реализованное ядро
-            lost_share=self._lost_share(len(objects), period_to),
-            rediscovered_share=self._rediscovered_share(period_from, period_to),
+            dangerous_approaches=None,
+            lost_share=self._lost_share(len(objects), journal_entries),
+            rediscovered_share=self._rediscovered_share(
+                period_from, period_to, journal_entries),
             orbit_coverage=self._orbit_coverage(self._tools.get_all()),
             avg_gap_hours=self._avg_gap_hours(period_from, period_to),
         )
 
     @staticmethod
     def _counts_by_type(objects) -> dict[str, int] | None:
+        # Оптимизация №4: Counter вместо ручного dict
         if not objects:
             return None
-        counts = {t.label: 0 for t in ObjectType}
-        for o in objects:
-            counts[o.object_type.label] += 1
-        return counts
+        counted = Counter(o.object_type.label for o in objects)
+        return {t.label: counted.get(t.label, 0) for t in ObjectType}
 
-    def _lost_share(self, total_objects: int, period_to: datetime) -> Metric:
+    def _lost_share(self, total_objects: int,
+                    entries: list[JournalEntry]) -> Metric:
         """Доля объектов, которые на конец периода числятся утерянными (по журналу)."""
         if total_objects == 0:
             return Metric(None)
         last_event: dict[str, EventType] = {}
-        for entry in self._journal.until(period_to):
+        for entry in entries:
             if entry.event_type in (EventType.LOST, EventType.REDISCOVERED):
                 last_event[entry.catalog_number] = entry.event_type
         lost = sum(1 for e in last_event.values() if e is EventType.LOST)
         return Metric(lost / total_objects, lost, total_objects)
 
-    def _rediscovered_share(self, period_from: datetime, period_to: datetime) -> Metric:
-        """Повторно обнаруженные за период / объекты, утерянные хотя бы раз к концу периода."""
-        entries = self._journal.until(period_to)
+    def _rediscovered_share(self, period_from: datetime, period_to: datetime,
+                            entries: list[JournalEntry]) -> Metric:
+        """Повторно обнаруженные за период / объекты, утерянные хотя бы раз."""
         ever_lost = {e.catalog_number for e in entries if e.event_type is EventType.LOST}
         rediscovered = {e.catalog_number for e in entries
                         if e.event_type is EventType.REDISCOVERED
@@ -99,7 +103,6 @@ class ReportService:
 
     @staticmethod
     def _orbit_coverage(tools: list[ObservationTool]) -> Metric:
-        """Доля орбитального пространства (высота × наклонение), покрытая средствами в строю."""
         if not tools:
             return Metric(None)
         rects = []
@@ -118,8 +121,6 @@ class ReportService:
         return Metric(_union_area(rects) / total if rects else 0.0)
 
     def _avg_gap_hours(self, period_from: datetime, period_to: datetime) -> Metric:
-        """Для каждого объекта — среднее время между соседними наблюдениями периода,
-        затем среднее по объектам. Объекты с менее чем двумя наблюдениями не учитываются."""
         by_object: dict[str, list[datetime]] = {}
         for s in self._sessions.between(period_from, period_to):
             by_object.setdefault(s.catalog_number, []).append(s.observed_at)

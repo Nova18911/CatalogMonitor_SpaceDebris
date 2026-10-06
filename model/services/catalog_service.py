@@ -73,15 +73,17 @@ class CatalogService:
         self._policy.check(user.role, Action.CHECK_LOST)
         now = self._clock()
         newly_lost: list[SpaceObjectDto] = []
+        to_mark: list[str] = []
         for obj in self._objects.get_all():
             if obj.status is ObjectStatus.LOST or not obj.is_overdue(now, self._lost_after):
                 continue
             obj.mark_lost(now, self._lost_after)
-            self._objects.update(obj)
+            to_mark.append(obj.catalog_number)
             self._journal.add(JournalEntry(
                 None, EventType.LOST, obj.catalog_number, now,
                 f"Нет наблюдений более {self._lost_after.days} сут."))
             newly_lost.append(SpaceObjectDto.from_entity(obj))
+        self._objects.mark_lost_batch(to_mark)
         if newly_lost:
             self._bus.publish(ModelEvent("objects_lost", [o.catalog_number for o in newly_lost]))
         return newly_lost

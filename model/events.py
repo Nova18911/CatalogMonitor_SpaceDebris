@@ -22,7 +22,11 @@ class EventBus:
         self._observers: list[IModelObserver] = []
 
     def subscribe(self, observer: IModelObserver) -> None:
-        self._observers.append(observer)
+        if observer not in self._observers:
+            self._observers.append(observer)
+
+    def unsubscribe(self, observer: IModelObserver) -> None:
+        self._observers = [o for o in self._observers if o is not observer]
 
     def publish(self, event: ModelEvent) -> None:
         for observer in self._observers:
